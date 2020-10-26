@@ -1,3 +1,5 @@
 /.idea/
 /kafka-example.iml
 /target/
+/data/kafka
+/data/zookeeper
