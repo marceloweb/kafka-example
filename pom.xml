@@ -27,6 +27,7 @@
         <module>service-log</module>
         <module>service-new-order</module>
         <module>common-kafka</module>
+        <module>service-reading-report</module>
     </modules>
 
     <dependencies>
