@@ -14,15 +14,16 @@ public class KafkaDispatcher<T> implements Closeable {
 
     private final KafkaProducer<String, T> producer;
 
-    KafkaDispatcher() {
+    public KafkaDispatcher() {
         this.producer = new KafkaProducer<>(properties());
     }
 
     private static Properties properties() {
         var properties = new Properties();
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "<ip-kafka-server>:9092");
+        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, GsonSerializer.class.getName());
+        properties.setProperty(ProducerConfig.ACKS_CONFIG, "all");
 
         return properties;
     }

@@ -35,7 +35,7 @@ public class FraudDetectorService {
         }
         var order = record.value();
         if(isFraud(order)) {
-            System.out.println("Order is a fraud!" + order);
+            System.out.println("Order is a fraud!!!!!" + order);
             orderDispatcher.send("ECOMMERCE_ORDER_REJECTED", order.getEmail(), order);
         } else {
             System.out.println("Approved: " + order);
