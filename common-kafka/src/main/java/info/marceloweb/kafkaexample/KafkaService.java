@@ -32,7 +32,7 @@ public class KafkaService<T> implements Closeable {
         this.consumer = new KafkaConsumer<>(getProperties(type, groupId, properties));
     }
 
-    void run() throws ExecutionException, InterruptedException {
+    void run() {
         while (true) {
             var records = consumer.poll(Duration.ofMillis(100));
             if (!records.isEmpty()) {
@@ -40,9 +40,7 @@ public class KafkaService<T> implements Closeable {
                 for (var record : records) {
                     try {
                         parse.consume(record);
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -52,7 +50,7 @@ public class KafkaService<T> implements Closeable {
 
     private Properties getProperties(Class<T> type, String groupId, Map<String, String> overrideProperties) {
         var properties = new Properties();
-        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "<ip-kafka-server>:9092");
+        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, GsonDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
